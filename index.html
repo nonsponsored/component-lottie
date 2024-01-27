@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>	
+		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
+		<title>Lottie Component</title>
+		
+		<style>
+			/* PAGE STYLING */
+			:root {
+				--dark: #000;
+				--light: #fff;
+			}
+			* {
+				box-sizing: border-box;
+			}
+			html {
+				height: 100%;
+			}
+			body {
+				font-family: 'Helvetica Neue', sans-serif;
+				line-height: 1;
+				margin: 0;
+				min-height: 100%;
+				vertical-align: baseline;
+			}
+			button {
+				background: none;
+				border: none;
+				color: inherit;
+				cursor: pointer;
+				font-family: inherit;
+				font-size: 1.25rem;
+				line-height: inherit;
+				padding: 0;
+			}
+			header {
+				background-color: #f3f3f3;
+				border-block-end: 1px solid #c3c3c3;
+				margin-block-end: 50px;
+				padding-block: 5px;
+				padding-inline: 10px;
+			}
+			.text-block {
+				line-height: 1.4;
+				max-width: 75ch;
+				padding-inline: 10px;
+
+				ul {
+					padding-inline-start: 20px;
+				}
+
+				li {
+					padding-block-end: 10px;
+				}
+			}
+			/* END PAGE STYLING */
+
+			/* COMPONENT STYLES START HERE */
+			/* TEMP STYLES : Based on these Lottie files */
+			.lottie {
+				background-color: var(--dark);
+				margin-block-start: 1000px;
+			}
+			/* END TEMP STYLES */
+		
+			.lottie {
+				position: relative;
+			}
+			.lottie__animation {
+				aspect-ratio: 1567 / 697;
+			}
+			.lottie__animation-mobile {
+				aspect-ratio: 375 / 570;
+			}
+		
+			/* Control visibility of Lottie player containers */
+			@media all and (max-width: 767px) {
+				.lottie:not(.lottie--single-source) .lottie__animation {
+					display: none;
+				}
+			}
+			@media all and (min-width: 768px) {
+				.lottie__animation-mobile {
+					display: none;
+				}
+			}
+			
+			/* Handle prefers-reduced-motion */
+			@media (prefers-reduced-motion: reduce) {
+				.lottie__control {
+					display: none;
+				}
+			}
+			@media (prefers-reduced-motion: no-preference) {
+				.lottie__control {
+					inset-block-start: 20px;
+					inset-inline-start: 20px;
+					height: 44px;
+					overflow: hidden;
+					position: absolute;
+					text-indent: 100%;
+					transition: opacity 300ms ease-in-out;
+					width: 44px;
+					white-space: nowrap;
+					z-index: 3;
+				}
+				.lottie__control::before {
+					background: var(--light)
+						url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='16'%3E%3Cg fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='square'%3E%3Cpath d='M1.5 1v14M7.86 1v14'/%3E%3C/g%3E%3C/svg%3E")
+						center center no-repeat;
+					border-radius: 50%;
+					content: '';
+					display: block;
+					height: 36px;
+					inset-block-start: 50%;
+					inset-inline-start: 50%;
+					position: absolute;
+					text-indent: initial;
+					transform: translate(-50%, -50%);
+					width: 36px;
+				}
+				.lottie__control--play::before {
+					background: var(--light)
+						url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='16'%3E%3Cpath fill-rule='evenodd' d='M0 1l10 7-10 7z'/%3E%3C/svg%3E")
+						center center no-repeat;
+				}
+				.lottie__control--replay::before {
+					background: var(--light)
+						url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='20' viewBox='0 0 18 20'%3E%3Cpath d='M14.6725532,10.8729787 C14.6725532,14.0359574 12.0991489,16.6093617 8.93617021,16.6093617 C5.77319149,16.6093617 3.19978723,14.0359574 3.19978723,10.8729787 C3.19978723,8.04340426 5.25978723,5.68744681 7.95829787,5.22170213 L7.95829787,6.88255319 L13.7453191,3.5412766 L7.95829787,0.199361702 L7.95829787,1.99978723 C3.49404255,2.48829787 0.00829787234,6.2806383 0.00829787234,10.8729787 C0.00829787234,15.7957447 4.01340426,19.8006383 8.93617021,19.8006383 C13.8591489,19.8006383 17.8640426,15.7957447 17.8640426,10.872766 L14.6725532,10.872766 L14.6725532,10.8729787 Z'/%3E%3C/svg%3E")
+						center center no-repeat;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<header>
+			<img src="assets/logo-m4m5.svg" width="45" height="34" alt="M4M5 Logo" />
+		</header>
+
+		<main>
+			<div class="text-block">
+				<h1>Lottie Component</h1>
+				<h2>Details</h2>
+				<ul>
+					<li>Allows one or two Lottie files, in order to support different aspect ratios.</li>
+					<li>A Lottie file only loads when 50% of the component is in viewport.</li>
+					<li>A single button controls Play/Pause/Replay functionality. Note that if the Lottie player is set to loop, the Replay icon will never appear.</li>
+					<li>If two Lottie files are defined and the browser is resized above/below the defined 767px breakpoint, the visible one will stop on the last frame, while the next one will load and play. Any subsequent resize of the brower will keep them stopped on the last frame.</li>
+					<li>prefers-reduced-motion is honored and will jump the Lottie player to the last frame and stop.</li>
+					<li>aria-label is on the component to provide a description of the animation for screen readers.</li>
+				</ul>
+
+				<h2>Considerations</h2>
+				<ul>
+					<li>When part of a framework, you'll want to dynamically get and set aspect-ratios during build. You can do this by fetching and parsing the JSON file for 'w' and 'h', and pass those as an aspect-ratio to a CSS Variable.</li>
+					<li>When providing guidance to the person creating Lottie animations, encourage consistency in sizes/aspect-ratios, and ensure the last frame displays all of the content.</li>
+				</ul>
+
+				<h2>Demo</h2>
+				<p>There are two Lottie components on this page. The first has two files defined, which have different aspect ratios. The second only has one file.</p>
+			</div>
+
+			<div class="lottie" aria-label="Example of mobile and desktop Lottie files.">
+				<div class="lottie__animation">
+					<lottie-player data-src="assets/lottie-desktop.json" aria-hidden="true"></lottie-player>
+				</div>
+				
+				<div class="lottie__animation-mobile">
+					<lottie-player data-src="assets/lottie-mobile.json" aria-hidden="true"></lottie-player>
+				</div>
+							
+				<button type="button" aria-live="assertive" class="lottie__control">Pause</button>
+			</div>
+
+			<div class="lottie lottie--single-source" aria-label="Example of desktop only Lottie file.">
+				<div class="lottie__animation">
+					<lottie-player data-src="assets/lottie-desktop.json" aria-hidden="true"></lottie-player>
+				</div>
+						
+				<button type="button" aria-live="assertive" class="lottie__control">Pause</button>
+			</div>
+		</main>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-player/1.4.3/lottie-player.min.js"></script>
+		<script>
+			class Lottie {
+				container
+				desktopContainer
+				mobileContainer
+				player
+				control
+				controlDescription
+				desktopLoaded
+				mobileLoaded
+				breakpoint
+				playIconClass
+				replayIconClass
+		
+				constructor(lottieContainer) {
+					if (!lottieContainer || lottieContainer.inited) {
+						return
+					}
+					lottieContainer.inited = true
+		
+					this.container = lottieContainer
+					this.desktopContainer = this.container.querySelector('.lottie__animation')
+					this.mobileContainer = this.container.querySelector('.lottie__animation-mobile')
+					this.player = Array.from(this.container.querySelectorAll('lottie-player'))
+					this.control = this.container.querySelector('.lottie__control')
+					this.controlDescription = 'animation'
+					this.desktopLoaded = false
+					this.mobileLoaded = false
+					this.breakpoint = window.matchMedia('(max-width: 767px)')
+					this.playIconClass = 'lottie__control--play'
+					this.replayIconClass = 'lottie__control--replay'
+		
+					// Initialize observer
+					this.observer.observe(this.container)
+		
+					// Add listener to Play/Pause/Replay button
+					this.control.addEventListener('click', () => this.togglePlayPauseReplay())
+		
+					// Add listener to Lottie players not set to loop
+					this.player.forEach((player) => {
+						if (!player.hasAttribute('loop')) {
+							player.addEventListener('complete', () => this.handleComplete())
+						}
+					})
+		
+					// Add listener to breakpoint
+					this.breakpoint.addEventListener('change', () => this.handleResize())
+				}
+		
+				// Load unloaded Lottie files if screen size changes
+				handleResize = () => {
+					// Unobserve the elements to stop the previous intersection observations
+					this.observer.unobserve(this.container)
+		
+					// Observe the elements again after handling the resize event
+					this.observer.observe(this.container)
+		
+					// Go to the end of the animation for all players
+					this.player.forEach((player) => {
+						this.goToEnd(player)
+					})
+		
+					// Check if either mobile or desktop player hasn't loaded, and remove replay class
+					if (
+						(!this.mobileLoaded && this.mobileContainer) ||
+						(!this.desktopLoaded && this.desktopContainer)
+					) {
+						this.player.forEach((player) => {
+							player.addEventListener('ready', () => {
+								const classesToRemove = [this.playIconClass, this.replayIconClass]
+								this.control.classList.remove(...classesToRemove)
+							})
+						})
+					}
+				}
+		
+				// Update Control state on complete of animation
+				handleComplete = () => {
+					this.control.classList.add(this.replayIconClass)
+					this.control.textContent = 'Replay ' + this.controlDescription
+				}
+		
+				// Go to last frame
+				goToEnd = (player) => {
+					const lottieInstance = player.getLottie()
+					if (lottieInstance && lottieInstance.totalFrames) {
+						player.seek(lottieInstance.totalFrames)
+						this.handleComplete()
+					}
+				}
+		
+				// Player Control Button
+				togglePlayPauseReplay = () => {
+					const isReplay = this.control.classList.contains(this.replayIconClass)
+					const isPlaying = this.control.classList.contains(this.playIconClass)
+		
+					this.player.forEach((player) => {
+						const lottieInstance = player.getLottie()
+						if (lottieInstance) {
+							if (isReplay) {
+								this.control.classList.remove(this.replayIconClass)
+								this.control.textContent = 'Pause ' + this.controlDescription
+		
+								lottieInstance.goToAndPlay(0)
+							} else {
+								if (lottieInstance.isPaused) {
+									lottieInstance.play()
+								} else {
+									lottieInstance.pause()
+								}
+		
+								this.control.textContent = isPlaying
+									? 'Pause ' + this.controlDescription
+									: 'Play ' + this.controlDescription
+		
+								this.control.classList.toggle(this.playIconClass, !isPlaying)
+							}
+						}
+					})
+				}
+		
+				// Load Lottie file
+				loadLottie = (containerSelector) => {
+					const playerContainer = this.container.querySelector(containerSelector)
+					const player = playerContainer.querySelector('lottie-player')
+		
+					if (player) {
+						player.load(player.getAttribute('data-src'))
+						player.play()
+		
+						// If prefers-reduced-motion set, go to last frame for each player
+						if (!window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+							player.addEventListener('ready', () => {
+								this.goToEnd(player)
+							})
+						}
+		
+						// Check if it's a small screen and load the mobile Lottie player if present, or load the desktop Lottie player otherwise
+						if (this.breakpoint.matches) {
+							if (this.mobileContainer && !this.mobileLoaded) {
+								this.mobileLoaded = true
+							} else if (this.desktopContainer && !this.desktopLoaded) {
+								this.desktopLoaded = true
+							}
+						} else {
+							// If it's a medium screen or larger, load the desktop Lottie player if present
+							if (this.desktopContainer && !this.desktopLoaded) {
+								this.desktopLoaded = true
+							}
+						}
+					}
+				}
+		
+				// Load/Play/Pause when in/out of viewport...threshold set to 0.5 (50%)
+				observer = new IntersectionObserver((entries) => {
+					entries.forEach((entry) => {
+						//if (entry.isIntersecting) {
+						if (entry.intersectionRatio >= 0.5) {
+							// If small screen and there's a mobile Lottie file that hasn't been loaded yet, load it.
+							if (this.breakpoint.matches && this.mobileContainer && !this.mobileLoaded) {
+								this.loadLottie('.lottie__animation-mobile')
+							}
+		
+							// If small screen, there's no a mobile Lottie file and the desktop Lottie file hasn't been loaded yet, load it.
+							// Or
+							// If large screen and there's a desktop Lottie file that hasn't been loaded yet, load it.
+							if (
+								(this.breakpoint.matches && !this.mobileContainer && !this.desktopLoaded) ||
+								(!this.breakpoint.matches && this.desktopContainer && !this.desktopLoaded)
+							) {
+								this.loadLottie('.lottie__animation')
+							}
+		
+							// If Lottie player isn't at end with replay icon, play.
+							if (!this.control.classList.contains(this.replayIconClass)) {
+								this.player.forEach((player) => {
+									player.play()
+								})
+							}
+						} else {
+							// Pause Lottie player when not in viewport
+							this.player.forEach((player) => {
+								player.pause()
+							})
+						}
+					})
+				}, { threshold: 0.5 })
+			}
+
+			document.querySelectorAll('.lottie').forEach((lottie) => {
+				new Lottie(lottie)
+			})	
+		</script>
+	</body>
+</html> 
