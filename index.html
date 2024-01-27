@@ -340,8 +340,7 @@
 				// Load/Play/Pause when in/out of viewport...threshold set to 0.5 (50%)
 				observer = new IntersectionObserver((entries) => {
 					entries.forEach((entry) => {
-						//if (entry.isIntersecting) {
-						if (entry.intersectionRatio >= 0.5) {
+						if (entry.isIntersecting) {
 							// If small screen and there's a mobile Lottie file that hasn't been loaded yet, load it.
 							if (this.breakpoint.matches && this.mobileContainer && !this.mobileLoaded) {
 								this.loadLottie('.lottie__animation-mobile')
