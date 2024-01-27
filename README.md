@@ -17,3 +17,5 @@
 
 <h2>Demo</h2>
 <p>There are two Lottie components on this page. The first has two files defined, which have different aspect ratios. The second only has one file.</p>
+
+https://nonsponsored.github.io/component-lottie/
