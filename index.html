@@ -162,6 +162,7 @@
 				<p>There are two Lottie components on this page. The first has two files defined, which have different aspect ratios. The second only has one file.</p>
 			</div>
 
+			<!-- Example with Double Lottie files. -->
 			<div class="lottie" aria-label="Example of mobile and desktop Lottie files.">
 				<div class="lottie__animation">
 					<lottie-player data-src="assets/lottie-desktop.json" aria-hidden="true"></lottie-player>
@@ -174,6 +175,7 @@
 				<button type="button" aria-live="assertive" class="lottie__control">Pause</button>
 			</div>
 
+			<!-- Example with Double Sinlge file. -->
 			<div class="lottie lottie--single-source" aria-label="Example of desktop only Lottie file.">
 				<div class="lottie__animation">
 					<lottie-player data-src="assets/lottie-desktop.json" aria-hidden="true"></lottie-player>
@@ -199,6 +201,7 @@
 				replayIconClass
 		
 				constructor(lottieContainer) {
+					// Check for container and initialized
 					if (!lottieContainer || lottieContainer.inited) {
 						return
 					}
@@ -260,7 +263,7 @@
 					}
 				}
 		
-				// Update Control state on complete of animation
+				// Update Control state on completion of animation
 				handleComplete = () => {
 					this.control.classList.add(this.replayIconClass)
 					this.control.textContent = 'Replay ' + this.controlDescription
@@ -369,7 +372,7 @@
 							})
 						}
 					})
-				}, { threshold: 0.5 })
+				}, { threshold: 0.5 }) // Adjust value between 0-1, or remove entirely if IO should trigger as soon as container enters viewport
 			}
 
 			document.querySelectorAll('.lottie').forEach((lottie) => {
